@@ -18,6 +18,7 @@ window.addEventListener('click', function () {
   basketEl.classList.remove('show');
 });
 
+// 검색
 const headerEl = document.querySelector('header')
 const headerMenuEls = [...headerEl.querySelectorAll('ul.menu > li')]
 const searchWrapEl = headerEl.querySelector('.search-wrap')
@@ -45,7 +46,7 @@ function showSearch() {
   searchDelayEls.forEach((el, index) => {
     el.style.transitionDelay = `${index * duration / searchDelayEls.length}s`
   })
-  // 검색 인풋 요소가 나타난 후 동작!
+  // 검색 인풋 요소가 나타난 후 동작
   setTimeout(() => {
     searchInputEl.focus()
   }, 600);
@@ -62,6 +63,7 @@ function hideSearch() {
   searchDelayEls.reverse() // 나타날 때 원래의 순서대로 처리해야 하기 때문에 다시 뒤집어서 순서 돌려놓기!
   searchInputEl.value = '' // 입력값 초기화
 }
+
 function playScroll() {
   // documentElement is <html>
   document.documentElement.classList.remove('fixed')
@@ -69,6 +71,65 @@ function playScroll() {
 function stopScroll() {
   document.documentElement.classList.add('fixed')
 }
+
+// header menu toggle[m]
+const menuStarterEl = document.querySelector('header .menu-starter')
+menuStarterEl.addEventListener('click', function () {
+  if(headerEl.classList.contains('menuing')) {
+    headerEl.classList.remove('menuing')
+    searchInputEl.value = ''
+    playScroll()
+  } else {
+    headerEl.classList.add('menuing')
+    stopScroll()
+  }
+})
+
+// header search[m]
+const searchTextFieldEl = document.querySelector('header .textfield')
+const searchCancelEl = document.querySelector('header .search-canceler')
+searchTextFieldEl.addEventListener('click', () => {
+  headerEl.classList.add('searching--mobile')
+  searchInputEl.focus()
+})
+searchCancelEl.addEventListener('click', () => {
+  headerEl.classList.remove('searching--mobile')
+})
+
+window.addEventListener('resize', function () {
+  if(window.innerWidth <= 740) {
+    headerEl.classList.remove('searching')
+  } else {
+    headerEl.classList.remove('searching--mobile')
+  }
+})
+
+// 네비게이션 메뉴 toggle[m]
+const navEl = document.querySelector('nav')
+const navMenuToggleEl = navEl.querySelector('.menu-toggler')
+const navMenuShadowEl = navEl.querySelector('.shadow')
+
+navMenuToggleEl.addEventListener('click', () => {
+  if (navEl.classList.contains('menuing')) {
+    hideNavMenu()
+  } else {
+    showNavMenu()
+  }
+})
+navEl.addEventListener('click', event => {
+  event.stopPropagation()
+})
+navMenuShadowEl.addEventListener('click', hideNavMenu)
+window.addEventListener('click', hideNavMenu)
+
+function showNavMenu() {
+  navEl.classList.add('menuing')
+}
+
+function hideNavMenu() {
+  navEl.classList.remove('menuing')
+}
+
 
 // 요소의 가시성 관찰
 const io = new IntersectionObserver(function (entries) {
@@ -159,3 +220,13 @@ navigations.forEach(nav => {
 
 const thisYearEl = document.querySelector('span.this-year')
 thisYearEl.textContent = new Date().getFullYear()
+
+
+// 푸터 내비게이션 맵 아코디언
+const mapEls = [...document.querySelectorAll('footer .navigations .map')]
+mapEls.forEach(el => {
+  const h3El = el.querySelector('h3')
+  h3El.addEventListener('click', () => {
+    el.classList.toggle('active')
+  })
+})
