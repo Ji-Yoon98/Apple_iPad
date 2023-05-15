@@ -1,3 +1,7 @@
+import ipads from '../data/ipads.js';
+import navigations from '../data/navigations.js';
+
+// 장바구니
 const basketStarterEl = document.querySelector('header .basket-starter');
 const basketEl = basketStarterEl.querySelector('.basket');
 
@@ -96,4 +100,33 @@ pauseBtn.addEventListener('click', function () {
   video.pause();
   pauseBtn.classList.add('hide')
   playBtn.classList.remove('hide')
+})
+
+// '당신에게 맞는 iPed는?' 렌더링
+const itemsEl = document.querySelector('section.compare .items')
+ipads.forEach(ipad => {
+  const itemEl = document.createElement('div')
+  itemEl.classList.add('item')
+
+  let colorList = ''
+  ipad.colors.forEach(color => {
+    colorList += `<li style="background-color: ${color};"></li>`
+  })
+
+  // VS Code 확장 프로그램 - Comment tagged templates
+  itemEl.innerHTML = /* html */ `
+    <div class="thumbnail">
+      <img src="${ipad.thumbnail}" alt="${ipad.name}" />
+    </div>
+    <ul class="colors">
+      ${colorList}
+    </ul>
+    <h3 class="name">${ipad.name}</h3>
+    <p class="tagline">${ipad.tagline}</p>
+    <p class="price">₩${ipad.price.toLocaleString('en-US')}부터</p>
+    <button class="btn">구입하기</button>
+    <a href="${ipad.url}" class="link">더 알아보기</a>
+  `
+
+  itemsEl.append(itemEl)
 })
