@@ -1,4 +1,4 @@
-# 🍎Apple_iPad
+# 🍎 Apple_iPad
 
 ### HTML, CSS, JavaScript로 만드는 애플 아이패드 반응형 웹사이트
 
