@@ -99,9 +99,6 @@ searchCancelEl.addEventListener('click', () => {
 window.addEventListener('resize', function () {
   if(window.innerWidth <= 740) {
     headerEl.classList.remove('searching')
-    video.pause();
-    pauseBtn.classList.add('hide')
-    playBtn.classList.remove('hide')
   } else {
     headerEl.classList.remove('searching--mobile')
   }
